@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:12:59 by mtelek            #+#    #+#             */
-/*   Updated: 2024/05/28 13:45:50 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/05/28 22:20:13 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ int	create_data(t_data **data, char **argv)
 	(*data)->is_dead = false;
 	(*data)->id_dead = 0;
 	pthread_mutex_init(&(*data)->printf, NULL);
-	pthread_mutex_init(&(*data)->protect, NULL);
 	return (0);
 }
 
@@ -76,7 +75,11 @@ void	m_destroy_free(t_data *data)
 
 	i = 0;
 	while (i <= data->n_philo && data->n_philo != 1)
-		pthread_mutex_destroy(&data->forks[i++]);
+	{
+		pthread_mutex_destroy(&data->forks[i]);
+		pthread_mutex_destroy(&data->philo[i].protect);
+		i++;
+	}
 	pthread_mutex_destroy(&data->printf);
 	if (data->thread)
 		free(data->thread);

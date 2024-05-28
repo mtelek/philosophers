@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:00:21 by mtelek            #+#    #+#             */
-/*   Updated: 2024/05/28 14:08:18 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/05/28 22:37:57 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	philo_init(t_data *data)
 		data->philo[i].eat_count = 0;
 		data->philo[i].t_last_eaten = 0;
 		data->philo[i].start_time = 0;
+		pthread_mutex_init(&data->philo[i].protect, NULL);
 		i++;
 	}
 	data->boss->start_time = 0;

@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:39:17 by mtelek            #+#    #+#             */
-/*   Updated: 2024/05/28 13:45:28 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/05/28 22:20:39 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ typedef struct s_data
 	bool			is_dead;
 	int				id_dead;
 	pthread_mutex_t	printf;
-	pthread_mutex_t	protect;
 	pthread_t		*thread;
 	pthread_mutex_t	*forks;
 	struct s_philo	*philo;
@@ -51,6 +50,7 @@ typedef struct s_philo
 	u_int64_t		start_time;
 	pthread_mutex_t	l_fork;
 	pthread_mutex_t	r_fork;
+	pthread_mutex_t	protect;
 	t_data			*data;
 
 }					t_philo;
@@ -79,5 +79,10 @@ void				*routine(void *arg);
 // time setting
 int					ft_usleep(useconds_t time);
 u_int64_t			get_time(void);
+
+
+//helperhelper
+
+int	ft_strncmp(const char *str1, const char *str2, size_t n);
 
 #endif
