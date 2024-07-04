@@ -1,0 +1,6 @@
+boss->data->is_dead    pthread_mutex_lock(&boss->data->printf);
+data->philo[i].start_time    pthread_mutex_lock(&data->printf);
+philo->data->checking_round   pthread_mutex_lock(&data->check);
+philo->t_last_eaten   pthread_mutex_lock(&philo->protect);
+philo->data->all_done     pthread_mutex_lock(&data->all_done);
+philo->data->counter   pthread_mutex_lock(&data->check);
