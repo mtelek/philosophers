@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 21:00:21 by mtelek            #+#    #+#             */
-/*   Updated: 2024/07/04 13:55:11 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:18:41 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,23 @@ void	*monitor(void *arg)
 {
 	t_philo		*monitor;
 	uint64_t	time;
-	
+
 	monitor = (t_philo *)arg;
 	while (1)
 	{
+		pthread_mutex_lock(&monitor->data->printf);
 		if (monitor->data->is_dead == true)
 		{
-			pthread_mutex_lock(&monitor->data->printf);
-			monitor->data->boss->start_time = monitor->data->philo[monitor->data->id_dead
-				- 1].start_time;
+			monitor->data->boss->start_time
+				= monitor->data->philo[monitor->data->id_dead - 1].start_time;
 			time = get_time() - monitor->data->boss->start_time;
 			printf("%lu %d died\n", time, monitor->data->id_dead);
 			pthread_mutex_unlock(&monitor->data->printf);
 			break ;
 		}
-		if (monitor->data->all_done == true)
+		if (checking_done(monitor) == true)
 			break ;
+		pthread_mutex_unlock(&monitor->data->printf);
 		ft_usleep(1);
 	}
 	return (NULL);
@@ -106,5 +107,5 @@ void	philo_init(t_data *data)
 		pthread_mutex_init(&data->philo[i].lock, NULL);
 	}
 	data->boss->data = data;
-    data->boss->start_time = get_time();
+	data->boss->start_time = get_time();
 }

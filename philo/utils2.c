@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/02 17:12:54 by mtelek            #+#    #+#             */
-/*   Updated: 2024/07/04 13:51:39 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/07/04 16:16:40 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@ void	checker_t_last_eaten(t_philo *philo)
 {
 	if (philo->t_last_eaten > philo->data->t_die)
 	{
+		pthread_mutex_lock(&philo->data->printf);
 		if (philo->data->id_dead == 0)
 		{
-			pthread_mutex_lock(&philo->data->printf);
 			philo->data->id_dead = philo->id;
 			philo->data->is_dead = true;
 			philo->data->boss->start_time = philo->start_time;
 			ft_usleep(1);
-			pthread_mutex_unlock(&philo->data->printf);
 		}
-		return ;
+		pthread_mutex_unlock(&philo->data->printf);
 	}
 }
 

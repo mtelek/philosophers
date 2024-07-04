@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/05 20:39:17 by mtelek            #+#    #+#             */
-/*   Updated: 2024/07/03 23:40:58 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/07/04 18:20:49 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,15 @@ void				*routine(void *arg);
 void				refreshing_data(t_philo *philo);
 void				delaying_even(t_philo *philo);
 void				delaying_uneven(t_philo *philo);
-bool				checking_all_done(t_philo *philo);
-
 void				printf_message(t_philo *philo, char *text);
 void				checker_t_last_eaten(t_philo *philo);
 void				*s1_routine(void *arg);
 int					sen_one(t_data *data);
+
+// checking
+bool				checking_all_done(t_philo *philo);
+bool				checking_done(t_philo *monitor);
+bool				checking_dead(t_philo *philo);
 
 // time setting
 int					ft_usleep(useconds_t time);

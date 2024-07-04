@@ -6,7 +6,7 @@
 /*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 15:12:59 by mtelek            #+#    #+#             */
-/*   Updated: 2024/07/04 14:30:55 by mtelek           ###   ########.fr       */
+/*   Updated: 2024/07/04 17:51:10 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,11 @@ void	free_data(t_data *data)
 		free(data->philo);
 	pthread_mutex_destroy(&data->check);
 	pthread_mutex_destroy(&data->alldone);
+	pthread_mutex_lock(&data->printf);
+	pthread_mutex_unlock(&data->printf);
 	pthread_mutex_destroy(&data->printf);
+	if (data)
+		free(data);
 }
 
 void	m_destroy_free(t_data *data)
