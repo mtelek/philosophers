@@ -55,5 +55,9 @@ The philosopher states can be visualized using this interactive tool created by 
    ./philo 4 800 200 200 > output.txt
    ```
 2. Paste your `output.txt` contents into the visualizer's input field
-   
-## 🧪 Testing
+
+## 🧪 Automated Testing
+For comprehensive testing, you can use the [LazyPhilosophersTester](https://github.com/MichelleJiam/LazyPhilosophersTester) created by [MichelleJiam](https://github.com/MichelleJiam):
+
+### Test ran on the program:
+<img width="533" height="563" alt="image" src="https://github.com/user-attachments/assets/23422470-6337-47f5-9daa-2de84637b249" />
