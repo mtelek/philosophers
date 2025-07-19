@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sen_one.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mtelek <mtelek@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mtelek <mtelek@student.42vienna.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 13:55:52 by mtelek            #+#    #+#             */
-/*   Updated: 2024/07/04 17:16:05 by mtelek           ###   ########.fr       */
+/*   Updated: 2025/07/19 14:35:08 by mtelek           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	*s1_routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	(void)philo;
 	return (NULL);
 }
 
