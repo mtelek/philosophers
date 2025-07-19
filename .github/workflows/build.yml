@@ -24,12 +24,17 @@ jobs:
     - name: Run basic tests
       run: |
         cd philo
-        # Test 1: Verify program starts (should timeout)
-        timeout 3s ./philo 4 800 200 200
-        if [ $? -eq 124 ]; then
+        # Test 1: Verify program starts (controlled test)
+        ./philo 4 800 200 200 > output.log 2>&1 &
+        PID=$!
+        sleep 3  # Let it run for 3 seconds
+        
+        if ps -p $PID > /dev/null; then
           echo "✅ Test 1 Passed (Program runs)"
+          kill $PID
+          wait $PID 2>/dev/null
         else
-          echo "❌ Test 1 Failed (Program didn't run)"
+          echo "❌ Test 1 Failed (Program terminated early)"
           exit 1
         fi
         
