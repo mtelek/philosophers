@@ -1,0 +1,31 @@
+# Object files and directories
+.objs/
+*.o
+*.a
+*.so
+
+# Executables
+philo
+
+# Temporary files
+*.swp
+*~
+*.bak
+*.tmp
+
+# IDE specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# macOS specific
+.DS_Store
+._*
+
+# Test files
+output.txt
+simulation.log
+test_*
+
+# Dependency directories
+deps/
