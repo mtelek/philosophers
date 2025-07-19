@@ -21,29 +21,40 @@ jobs:
         cd philo
         make re
         
-    - name: Run basic tests
+    - name: Run comprehensive tests
       run: |
         cd philo
-        # Test 1: Verify program starts (controlled test)
-        ./philo 4 800 200 200 > output.log 2>&1 &
-        PID=$!
-        sleep 3  # Let it run for 3 seconds
-        
-        if ps -p $PID > /dev/null; then
-          echo "✅ Test 1 Passed (Program runs)"
-          kill $PID
-          wait $PID 2>/dev/null
+        # Test 1: Even number of philosophers (4) with 10 meals
+        echo "Running Test 1: 4 philosophers, 10 meals"
+        ./philo 4 800 200 200 10 > even_philos.log
+        meals_count=$(grep -c "is eating" even_philos.log)
+        if [ "$meals_count" -ge 40 ]; then
+          echo "✅ Test 1 Passed: 4 philos completed ${meals_count}/40 meals"
         else
-          echo "❌ Test 1 Failed (Program terminated early)"
+          echo "❌ Test1 Failed: Only ${meals_count}/40 meals eaten"
           exit 1
         fi
-        
-        # Test 2: Meal limit
-        ./philo 3 1000 200 200 5 > meals.txt
-        grep -q "is eating" meals.txt || { echo "❌ Test 2 Failed"; exit 1; }
-        echo "✅ Test 2 Passed (Meal limit works)"
-        
-        # Test 3: Single philosopher death
-        ./philo 1 800 200 200 > single.txt
-        grep -q "died" single.txt || { echo "❌ Test 3 Failed"; exit 1; }
-        echo "✅ Test 3 Passed (Single philo dies)"
+
+        # Test 2: Odd number of philosophers (5) with 10 meals
+        echo "Running Test 2: 5 philosophers, 10 meals"
+        ./philo 5 800 200 200 10 > odd_philos.log
+        meals_count=$(grep -c "is eating" odd_philos.log)
+        if [ "$meals_count" -ge 50 ]; then
+          echo "✅ Test2 Passed: 5 philos completed ${meals_count}/50 meals"
+        else
+          echo "❌ Test2 Failed: Only ${meals_count}/50 meals eaten"
+          exit 1
+        fi
+
+        # Test 3: Single philosopher with 10 meals (should die before completing)
+        echo "Running Test 3: 1 philosopher, 10 meals (should die)"
+        ./philo 1 800 200 200 10 > single_philo.log
+        if grep -q "died" single_philo.log; then
+          meals_count=$(grep -c "is eating" single_philo.log || echo 0)
+          echo "✅ Test3 Passed: Single philo died after ${meals_count} meals (as expected)"
+        else
+          echo "❌ Test3 Failed: Single philo didn't die"
+          exit 1
+        fi
+
+        echo "All tests completed successfully"
