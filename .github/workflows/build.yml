@@ -1,0 +1,39 @@
+name: Philosophers CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y make gcc
+      
+    - name: Compile project
+      run: |
+        cd philo
+        make re
+        
+    - name: Run basic tests
+      run: |
+        cd philo
+        # Test 1: 4 philosophers
+        timeout 5s ./philo 4 800 200 200
+        [ $? -eq 124 ] && echo "✅ Test 1 Passed (4 philo run)" || (echo "❌ Test 1 Failed" && exit 1)
+        
+        # Test 2: Meal limit
+        ./philo 3 1000 200 200 5 > meals.txt
+        grep -q "is eating" meals.txt
+        [ $? -eq 0 ] && echo "✅ Test 2 Passed (meal limit)" || (echo "❌ Test 2 Failed" && exit 1)
+        
+        # Test 3: Single philosopher
+        ./philo 1 800 200 200 > single.txt
+        grep -q "died" single.txt
+        [ $? -eq 0 ] && echo "✅ Test 3 Passed (single philo)" || (echo "❌ Test 3 Failed" && exit 1)
