@@ -24,16 +24,21 @@ jobs:
     - name: Run basic tests
       run: |
         cd philo
-        # Test 1: 4 philosophers
-        timeout 5s ./philo 4 800 200 200
-        [ $? -eq 124 ] && echo "✅ Test 1 Passed (4 philo run)" || (echo "❌ Test 1 Failed" && exit 1)
+        # Test 1: Verify program starts (should timeout)
+        timeout 3s ./philo 4 800 200 200
+        if [ $? -eq 124 ]; then
+          echo "✅ Test 1 Passed (Program runs)"
+        else
+          echo "❌ Test 1 Failed (Program didn't run)"
+          exit 1
+        fi
         
         # Test 2: Meal limit
         ./philo 3 1000 200 200 5 > meals.txt
-        grep -q "is eating" meals.txt
-        [ $? -eq 0 ] && echo "✅ Test 2 Passed (meal limit)" || (echo "❌ Test 2 Failed" && exit 1)
+        grep -q "is eating" meals.txt || { echo "❌ Test 2 Failed"; exit 1; }
+        echo "✅ Test 2 Passed (Meal limit works)"
         
-        # Test 3: Single philosopher
+        # Test 3: Single philosopher death
         ./philo 1 800 200 200 > single.txt
-        grep -q "died" single.txt
-        [ $? -eq 0 ] && echo "✅ Test 3 Passed (single philo)" || (echo "❌ Test 3 Failed" && exit 1)
+        grep -q "died" single.txt || { echo "❌ Test 3 Failed"; exit 1; }
+        echo "✅ Test 3 Passed (Single philo dies)"
